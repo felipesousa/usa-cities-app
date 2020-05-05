@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Subject, merge } from 'rxjs';
+import React, { useState, useEffect, useRef } from 'react';
+import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-const city$ = new Subject();
-const state$ = new Subject();
+const Subject$ = new Subject();
 
 const App = () => {
-  const [value] = useState(null);
+  const cityRef = useRef(null);
+  const stateRef = useRef(null);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    merge(city$, state$)
-      .pipe(debounceTime(5000))
+    Subject$
+      .pipe(debounceTime(2000))
       .subscribe(fetchData);
-  }, [value])
+  });
 
-  const onCity = (e) => {
-    city$.next({ city: e.target.value });
+  const getInputValues = () => ({
+    city: cityRef.current.value,
+    state: stateRef.current.value,
+  });
+
+  const onChange = (e) => {
+    Subject$.next(getInputValues());
   }
 
-  const onState = (e) => {
-    state$.next({ state: e.target.value });
-  }
-
-  const fetchData = async ({ city = '', state = '' }) => {
+  const fetchData = async ({ city, state }) => {
     try {
       const response = await fetch(`https://usa-cities-api.herokuapp.com/cities?city=${city}&state=${state}`);
       const data = await response.json();
@@ -35,11 +36,10 @@ const App = () => {
   }
 
   return <>
-    <input type="text" placeholder="city name here" id="city" onChange={onCity} />
-    <input type="text" placeholder="state name here" id="state" onChange={onState} />
-    <p>{value}</p>
+    <input type="text" ref={cityRef} placeholder="city name here" id="city" onChange={onChange} />
+    <input type="text" ref={stateRef} placeholder="state name here" id="state" onChange={onChange} />
     <ul>
-      { data && data.map(({ city, state }) => <li>{city} - {state}</li>) }
+      { data && data.map(({ city, state }, i) => <li key={i}>{city} - {state}</li>) }
     </ul>
   </>;
 }
