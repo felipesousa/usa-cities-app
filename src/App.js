@@ -5,8 +5,6 @@ import { debounceTime, mergeMap, map } from 'rxjs/operators';
 
 import parseUrl from './config';
 
-import './app.css';
-
 const Subject$ = new Subject();
 
 const App = () => {
