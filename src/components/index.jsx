@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Background from '../assets/city.jpg';
-import colors from '../config/colors';
 
 export const Main = styled.main`
   width: 100%;
@@ -9,7 +8,7 @@ export const Main = styled.main`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: ${colors.transparent};
+  background: ${props => props.theme.transparent};
   position: absolute;
   top: ${props => !!props.loading ? '160px' : 0};
   transition: all 0.5s linear 0s;
@@ -23,19 +22,15 @@ export const Input = styled.input`
   outline: none;
   border: none;
   margin-bottom: 30px;
-  background: ${colors.transparent};
-  border-bottom: 2px solid ${colors.secondary};
+  background: ${props => props.theme.transparent};
+  border-bottom: 2px solid ${props => props.theme.color};
   font-size: 1.5rem;
   font-family: Nunito;
-  color: ${colors.secondary};
+  color: ${props => props.theme.color};
   text-align: center;
 
   &::placeholder {
-    color: ${colors.secondary};
-  }
-
-  &::focus {
-    border-bottom: 2px solid red !important;
+    color: ${props => props.theme.color};
   }
 `;
 
@@ -43,7 +38,7 @@ export const Title = styled.h1`
   font-size: 20px;
   font-weight: 900;
   font-size: 4rem;
-  color: ${colors.primary};
+  color: ${props => props.theme.primary};
   margin-bottom: 0px;
 `;
 
@@ -54,17 +49,27 @@ export const SubTitle = styled.h2`
 
   a {
     text-decoration: none;
-    color: ${colors.secondary};
+    color: ${props => props.theme.color};
     font-style: italic;
     border: none;
-    border-bottom: 4px solid ${colors.primary};
+    border-bottom: 4px solid ${props => props.theme.primary};
   }
+`;
+
+export const Button = styled.button`
+  width: 150px;
+  background: ${props => props.theme.transparent};
+  border: 2px solid ${props => props.theme.primary};
+  color: ${props => props.theme.color};
+  font-size: 1.1rem;
+  margin-top: 20px;
+  cursor: pointer;
 `;
 
 export const Divider = styled.div`
   width: 100px;
   height: 5px;
-  background: ${colors.secondary};
+  background: ${props => props.theme.color};
   margin: 40px 0px;
 `;
 
@@ -108,20 +113,20 @@ export const City = styled.article`
 
 export const CityName = styled.h1`
   text-align: center;
-  color: ${colors.white};
+  color: ${props => props.theme.white};
   z-index: 2;
   margin: 0;
 `;
 
 export const StateName = styled.h4`
   text-transform: uppercase;
-  color: ${colors.white};
+  color: ${props => props.theme.white};
   z-index: 2;
   margin: 0;
 `;
 
 export const Line = styled.div`
-  color: ${colors.white};
+  color: ${props => props.theme.white};
   z-index: 2;
   display: flex;
   justify-content: center;
@@ -131,7 +136,7 @@ export const Line = styled.div`
     content: '';
     width: 45px;
     height: 2px;
-    background: ${colors.white};
+    background: ${props => props.theme.white};
     position: absolute;
   }
 `;
