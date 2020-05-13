@@ -12,6 +12,10 @@ export const Main = styled.main`
   position: absolute;
   top: ${props => !!props.loading ? '160px' : 0};
   transition: all 0.5s linear 0s;
+
+  @media (max-width: 800px) {
+    top: 0;
+  }
 `;
 
 export const Input = styled.input`
@@ -45,6 +49,7 @@ export const Title = styled.h1`
 export const SubTitle = styled.h2`
   margin-bottom: 0px;
   max-width: 700px;
+  width: 90%;
   font-weight: 400;
 
   a {
@@ -83,6 +88,10 @@ export const Cities = styled.section`
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
+
+  @media (max-width: 400px) {
+    justify-content: center;
+  }
 `;
 
 export const City = styled.article`
